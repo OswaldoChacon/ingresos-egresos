@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "ingreso-egreso-9481c": {
+      "hosting": {
+        "ingresos-egresos": [
+          "ingreso-egreso-9481c"
+        ]
+      }
+    }
+  }
+}
