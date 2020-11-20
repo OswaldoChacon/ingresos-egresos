@@ -35,7 +35,7 @@ export class AuthService {
 
   initOutListener() {
     this.auth.authState.subscribe(firebaseUser => {
-      console.log(firebaseUser?.email);
+      // console.log(firebaseUser?.email);
     })
   }
 

@@ -1,7 +1,10 @@
 import { Router, Routes } from '@angular/router';
 import { AuthService } from './../../services/auth.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.reducer';
 
 @Component({
   selector: 'app-register',
@@ -9,13 +12,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styles: [
   ]
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
 
+  cargando: boolean = false;
+  uiSubscription: Subscription;
   formRegistro: FormGroup;
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private store: Store<AppState>
   ) { }
 
   ngOnInit(): void {
@@ -24,7 +30,12 @@ export class RegisterComponent implements OnInit {
       nombre: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
-    })
+    });
+
+    this.uiSubscription = this.store.select('ui').subscribe(ui => this.cargando = ui.isLoading)
+  }
+  ngOnDestroy(): void {
+    this.uiSubscription.unsubscribe()
   }
 
   crearUsuario() {
@@ -32,7 +43,7 @@ export class RegisterComponent implements OnInit {
       return;
     this.authService.crearUsuario(this.formRegistro.value)
       .then(credenciales => {
-        this.router.navigate(['/dashboard'])        
+        this.router.navigate(['/dashboard'])
       })
       .catch(error => {
         console.error(error);
