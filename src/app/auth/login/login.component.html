@@ -48,9 +48,14 @@
                         <div class="form-group">
                             <button
                                 type="submit"
+                                [disabled]="formLogin.invalid || cargando"
                                 class="btn btn-primary submit-btn btn-block"
                             >
-                                Login
+                                <ng-container *ngIf="!cargando; else spinner">Login</ng-container>
+                                <ng-template #spinner>
+                                    <i class="fa fa-spin fa-sync"></i>
+                                    Espere...
+                                </ng-template>
                             </button>
                         </div>
 

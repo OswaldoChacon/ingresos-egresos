@@ -11,6 +11,6 @@ export class AppComponent {
   constructor(
     private authService: AuthService
   ) {
-    this.authService.initOutListener()
+    this.authService.initAuthListener()
   }
 }

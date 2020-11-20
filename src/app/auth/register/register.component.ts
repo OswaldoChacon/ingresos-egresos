@@ -1,3 +1,4 @@
+import { isLoading, stopLoading } from './../../shared/ui.actions';
 import { Router, Routes } from '@angular/router';
 import { AuthService } from './../../services/auth.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
@@ -41,8 +42,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
   crearUsuario() {
     if (this.formRegistro.invalid)
       return;
+    this.store.dispatch(isLoading());    
     this.authService.crearUsuario(this.formRegistro.value)
       .then(credenciales => {
+        this.store.dispatch(stopLoading());    
         this.router.navigate(['/dashboard'])
       })
       .catch(error => {
