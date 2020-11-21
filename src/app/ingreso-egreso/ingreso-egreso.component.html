@@ -7,12 +7,13 @@
               Especifique el monto y el tipo
             </p>
 
-            <form>
+            <form [formGroup]="formIngreso">
               
               <div class="form-group">
                 <label>Descripción</label>
                 <input type="text" 
                        class="form-control" 
+                       
                        placeholder="Descripción"
                        name="descripcion">
               </div>
